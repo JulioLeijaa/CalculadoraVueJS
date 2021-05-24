@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="calculadora botones">
+            <div class="boton pantalla">
+                <input type="text" class="boton-numero" name="" id="pantalla" disabled v-model="data">
+            </div>
+            <!-- Fila 1 -->
+            <input type="button" class="boton-numero clear" value="C" v-on:click="clean(event)">
+            <input type="button" class="boton-numero" value="÷" v-on:click="operate(event)">
+            <!-- Fila 2 -->
+            <input type="button" class="boton-numero" value="7" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="8" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="9" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="x" v-on:click="operate(event)">
+            <!-- Fila 3 -->
+            <input type="button" class="boton-numero" value="4" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="5" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="6" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="−" v-on:click="operate(event)">
+            <!-- Fila 4 -->
+            <input type="button" class="boton-numero" value="1" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="2" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="3" v-on:click="add(event)">
+            <!-- Fila 5 -->
+            <input type="button" class="boton-numero cero" value="0" v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="." v-on:click="add(event)">
+            <input type="button" class="boton-numero" value="=" v-on:click="equal()">
+            <input type="button" class="boton-numero mas" value="+" v-on:click="operate(event)">
+            <!-- Fila 6 -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <!-- development version, includes helpful console warnings -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                data: '',
+                first_value: '',
+                second_value: '',
+                operand: ''
+            },
+            methods: {
+                add: function(n) {
+                    if (this.data.includes('.') && n.target.value === '.') {
+                        return;
+                    }
+                    this.data += n.target.value
+                },
+                operate: function(n) {
+                    this.first_value = this.data;
+                    this.operand = n.target.value;
+                    this.data = '';
+                },
+                clean: function(n) {
+                    this.data = '';
+                    this.first_value = '';
+                    this.second_value = '';
+                    this.operand = '';
+                },
+                equal: function() {
+                    this.second_value = this.data;
+                    switch (this.operand) {
+                        case '+':
+                            this.data = parseFloat(this.first_value) + parseFloat(this.second_value)
+                            break;
+                        case '−':
+                            this.data = parseFloat(this.first_value) - parseFloat(this.second_value)
+                            break;
+                        case '÷':
+                            this.data = parseFloat(this.first_value) / parseFloat(this.second_value)
+                            break;
+                        case 'x':
+                            this.data = parseFloat(this.first_value) * parseFloat(this.second_value)
+                            break;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+</html>
